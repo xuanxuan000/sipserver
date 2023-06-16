@@ -116,7 +116,7 @@ func SetLogLevel(logLevel string) {
 	}
 }
 
-func Debug(v ...interface{}) {
+func Debugln(v ...interface{}) {
 	aclog.Named(fileInfo()).Debug(v...)
 
 }
@@ -124,21 +124,21 @@ func Debugf(format string, v ...interface{}) {
 	aclog.Named(fileInfo()).Debugf(format, v...)
 }
 
-func Error(v ...interface{}) {
+func Errorln(v ...interface{}) {
 	aclog.Named(fileInfo()).Error(v...)
 }
 func Errorf(format string, v ...interface{}) {
 	aclog.Named(fileInfo()).Errorf(format, v...)
 }
 
-func Warning(v ...interface{}) {
+func Warningln(v ...interface{}) {
 	aclog.Named(fileInfo()).Warn(v...)
 }
 func Warningf(format string, v ...interface{}) {
 	aclog.Named(fileInfo()).Warnf(format, v...)
 }
 
-func Info(v ...interface{}) {
+func Infoln(v ...interface{}) {
 	aclog.Named(fileInfo()).Info(v...)
 }
 func Infof(format string, v ...interface{}) {
@@ -146,9 +146,9 @@ func Infof(format string, v ...interface{}) {
 }
 
 func SignalHandle() {
-	Info("Start SignalHandle")
+	Infoln("Start SignalHandle")
 	t1 := time.NewTimer(1 * time.Hour)
-	ch := make(chan os.Signal)
+	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGUSR1, syscall.SIGUSR2)
 	for {
 		select {

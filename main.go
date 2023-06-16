@@ -5,13 +5,13 @@ import (
 	_ "net/http/pprof"
 
 	"github.com/gin-gonic/gin"
-	"github.com/panjjo/gosip/api"
-	"github.com/panjjo/gosip/api/middleware"
-	"github.com/panjjo/gosip/m"
-	sipapi "github.com/panjjo/gosip/sip"
-	"github.com/sirupsen/logrus"
+	"github.com/huahua000/sipserver/api"
+	"github.com/huahua000/sipserver/api/middleware"
+	"github.com/huahua000/sipserver/m"
+	sipapi "github.com/huahua000/sipserver/sip"
 
-	_ "github.com/panjjo/gosip/docs"
+	_ "github.com/huahua000/sipserver/docs"
+	"github.com/huahua000/sipserver/utils"
 
 	"github.com/robfig/cron"
 	swaggerfiles "github.com/swaggo/files"
@@ -49,7 +49,7 @@ func main() {
 
 	api.Init(r)
 
-	logrus.Fatal(r.Run(m.MConfig.API))
+	utils.Infoln(r.Run(m.MConfig.API))
 	// restapi.RestfulAPI()
 }
 

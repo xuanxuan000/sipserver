@@ -1,6 +1,6 @@
 TARGET = sipserver
 
-all: build
+all: clean build
 
 build:
 	GOOS=linux go build -v -o $(TARGET)

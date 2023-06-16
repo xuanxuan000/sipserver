@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
@@ -47,7 +46,7 @@ func NewError(err error, params ...interface{}) error {
 func JSONEncode(data interface{}) []byte {
 	d, err := json.Marshal(data)
 	if err != nil {
-		logrus.Errorln("JSONEncode error:", err)
+		Errorln("JSONEncode error:", err)
 	}
 	return d
 }
