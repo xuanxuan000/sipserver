@@ -7,7 +7,6 @@ import (
 	"time"
 
 	sdp "github.com/panjjo/gosdp"
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/db"
 	"github.com/xuanxuan000/sipserver/m"
 	sip "github.com/xuanxuan000/sipserver/sip/s"
@@ -144,13 +143,13 @@ func sipPlayPush(data *Streams, channel Channels, device Devices) (*Streams, err
 	req.SetRecipient(channel.addr.URI)
 	tx, err := srv.Request(req)
 	if err != nil {
-		logrus.Warningln("sipPlayPush fail.id:", device.DeviceID, channel.ChannelID, "err:", err)
+		utils.Warningln("sipPlayPush fail.id:", device.DeviceID, channel.ChannelID, "err:", err)
 		return data, err
 	}
 	// response
 	response, err := sipResponse(tx)
 	if err != nil {
-		logrus.Warningln("sipPlayPush response fail.id:", device.DeviceID, channel.ChannelID, "err:", err)
+		utils.Warningln("sipPlayPush response fail.id:", device.DeviceID, channel.ChannelID, "err:", err)
 		return data, err
 	}
 	data.Resp = response
@@ -198,11 +197,11 @@ func SipStopPlay(ssrc string) {
 		req.SetDestination(user.source)
 		tx, err := srv.Request(req)
 		if err != nil {
-			logrus.Warningln("sipStopPlay bye fail.id:", play.DeviceID, play.ChannelID, "err:", err)
+			utils.Warningln("sipStopPlay bye fail.id:", play.DeviceID, play.ChannelID, "err:", err)
 		}
 		_, err = sipResponse(tx)
 		if err != nil {
-			logrus.Warnln("sipStopPlay response fail", err)
+			utils.Warningln("sipStopPlay response fail", err)
 			play.Msg = err.Error()
 		} else {
 			play.Status = 1

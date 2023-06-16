@@ -8,7 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/utils"
 )
 
@@ -20,7 +19,7 @@ type Packet struct {
 }
 
 func newPacket(data []byte, raddr net.Addr) Packet {
-	logrus.Traceln("receive new packet,from:", raddr.String(), string(data))
+	utils.Traceln("receive new packet,from:", raddr.String(), string(data))
 	return Packet{
 		reader:     bufio.NewReader(bytes.NewReader(data)),
 		raddr:      raddr,
@@ -54,7 +53,7 @@ func (p *Packet) getBody() ([]byte, error) {
 			return body, err
 		}
 		if n != p.bodylength {
-			logrus.Warningf("body length err,%d!=%d,body:%s", n, p.bodylength, string(body))
+			utils.Warningf("body length err,%d!=%d,body:%s", n, p.bodylength, string(body))
 			return body[:n], nil
 		}
 	}
@@ -108,7 +107,7 @@ func (conn *connection) ReadFrom(buf []byte) (num int, raddr net.Addr, err error
 	if err != nil {
 		return num, raddr, utils.NewError(err, conn.logKey, "readfrom", conn.baseConn.LocalAddr().String(), raddr.String())
 	}
-	logrus.Tracef("readFrom %d , %s -> %s \n %s", num, raddr, conn.LocalAddr(), string(buf[:num]))
+	utils.Tracef("readFrom %d , %s -> %s \n %s", num, raddr, conn.LocalAddr(), string(buf[:num]))
 	return num, raddr, err
 }
 
@@ -130,7 +129,7 @@ func (conn *connection) WriteTo(buf []byte, raddr net.Addr) (num int, err error)
 	if err != nil {
 		return num, utils.NewError(err, conn.logKey, "writeTo", conn.baseConn.LocalAddr().String(), raddr.String())
 	}
-	logrus.Tracef("writeTo %d , %s -> %s \n %s", num, conn.baseConn.LocalAddr(), raddr.String(), string(buf[:num]))
+	utils.Tracef("writeTo %d , %s -> %s \n %s", num, conn.baseConn.LocalAddr(), raddr.String(), string(buf[:num]))
 	return num, err
 }
 

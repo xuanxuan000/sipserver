@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/db"
 	"github.com/xuanxuan000/sipserver/m"
 	sipapi "github.com/xuanxuan000/sipserver/sip"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // @Summary     监控播放（直播/回放）
@@ -78,7 +78,7 @@ func Stop(c *gin.Context) {
 		return
 	}
 	sipapi.SipStopPlay(streamid)
-	logrus.Infoln("closeStream apiStopPlay", streamid)
+	utils.Infoln("closeStream apiStopPlay", streamid)
 	m.JsonResponse(c, m.StatusSucc, "")
 }
 

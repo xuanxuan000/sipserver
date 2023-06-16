@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/utils"
 )
 
@@ -581,7 +580,7 @@ func (p *parser) start() {
 		packet = <-p.in
 		startLine, err := packet.nextLine()
 		if err != nil {
-			logrus.Errorln(err, "parserMessage", "getStartLine", startLine)
+			utils.Errorln(err, "parserMessage", "getStartLine", startLine)
 			continue
 		}
 		if isRequest(startLine) {
@@ -599,11 +598,11 @@ func (p *parser) start() {
 				termErr = utils.NewError(err, "parserMessage", "ParseStatusLine", startLine)
 			}
 		} else {
-			logrus.Errorln("undefind startlint type", startLine)
+			utils.Errorln("undefind startlint type", startLine)
 			continue
 		}
 		if termErr != nil {
-			logrus.Errorln(err)
+			utils.Errorln(err)
 			continue
 		}
 		var buffer bytes.Buffer
@@ -615,7 +614,7 @@ func (p *parser) start() {
 				if err == nil {
 					headers = append(headers, newHeaders...)
 				} else {
-					logrus.Warnf("skip header '%s' due to error: %s", buffer, err)
+					utils.Warningf("skip header '%s' due to error: %s", buffer, err)
 				}
 				buffer.Reset()
 			}
@@ -655,7 +654,7 @@ func (p *parser) start() {
 		}
 		body, err := packet.getBody()
 		if err != nil {
-			logrus.Errorln("readbody error:", err, "want size:", packet.bodylength, "body:", len(body), string(body))
+			utils.Errorln("readbody error:", err, "want size:", packet.bodylength, "body:", len(body), string(body))
 			continue
 		}
 		if len(body) != 0 {

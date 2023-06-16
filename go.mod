@@ -10,7 +10,6 @@ require (
 	github.com/panjjo/gorm v1.0.1
 	github.com/panjjo/gosdp v0.0.0-20201029020038-56e3a0ec56ef
 	github.com/robfig/cron v1.2.0
-	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.13.0
 	github.com/swaggo/files v0.0.0-20220728132757-551d4a08d97a
 	github.com/swaggo/gin-swagger v1.5.3

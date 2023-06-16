@@ -8,7 +8,6 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/db"
 	"github.com/xuanxuan000/sipserver/m"
 	sip "github.com/xuanxuan000/sipserver/sip/s"
@@ -71,10 +70,10 @@ func LoadSYSInfo() {
 			_sysinfo = m.DefaultInfo()
 
 			if err = db.Create(db.DBClient, _sysinfo); err != nil {
-				logrus.Fatalf("1 init sysinfo err:%v", err)
+				utils.Fatalf("1 init sysinfo err:%v", err)
 			}
 		} else {
-			logrus.Fatalf("2 init sysinfo err:%v", err)
+			utils.Fatalf("2 init sysinfo err:%v", err)
 		}
 	}
 	m.MConfig.GB28181 = _sysinfo
@@ -93,11 +92,11 @@ func LoadSYSInfo() {
 	// init media
 	url, err := url.Parse(config.Media.RTP)
 	if err != nil {
-		logrus.Fatalf("media rtp url error,url:%s,err:%v", config.Media.RTP, err)
+		utils.Fatalf("media rtp url error,url:%s,err:%v", config.Media.RTP, err)
 	}
 	ipaddr, err := net.ResolveIPAddr("ip", url.Hostname())
 	if err != nil {
-		logrus.Fatalf("media rtp url error,url:%s,err:%v", config.Media.RTP, err)
+		utils.Fatalf("media rtp url error,url:%s,err:%v", config.Media.RTP, err)
 	}
 	_sysinfo.MediaServerRtpIP = ipaddr.IP
 	_sysinfo.MediaServerRtpPort, _ = strconv.Atoi(url.Port())

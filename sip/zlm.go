@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/utils"
 )
 
@@ -51,14 +50,14 @@ func zlmGetMediaList(req zlmGetMediaListReq) zlmGetMediaListResp {
 	}
 	body, err := utils.GetRequest(config.Media.RESTFUL + reqStr)
 	if err != nil {
-		logrus.Errorln("get stream mediaList fail,", err)
+		utils.Errorln("get stream mediaList fail,", err)
 		return res
 	}
 	if err = utils.JSONDecode(body, &res); err != nil {
-		logrus.Errorln("get stream mediaList fail,", err)
+		utils.Errorln("get stream mediaList fail,", err)
 		return res
 	}
-	logrus.Traceln("zlmGetMediaList ", string(body), req.streamID)
+	utils.Traceln("zlmGetMediaList ", string(body), req.streamID)
 	return res
 }
 
@@ -87,11 +86,11 @@ func zlmGetMediaInfo(ssrc string) rtpInfo {
 	res := rtpInfo{}
 	body, err := utils.GetRequest(config.Media.RESTFUL + "/index/api/getRtpInfo?secret=" + config.Media.Secret + "&stream_id=" + ssrc)
 	if err != nil {
-		logrus.Errorln("get stream rtpInfo fail,", err)
+		utils.Errorln("get stream rtpInfo fail,", err)
 		return res
 	}
 	if err = utils.JSONDecode(body, &res); err != nil {
-		logrus.Errorln("get stream rtpInfo fail,", err)
+		utils.Errorln("get stream rtpInfo fail,", err)
 		return res
 	}
 	return res

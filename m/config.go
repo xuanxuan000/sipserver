@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xuanxuan000/sipserver/db"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // Config Config
@@ -77,6 +77,7 @@ func DefaultInfo() *SysInfo {
 var MConfig *Config
 
 func LoadConfig() {
+	utils.LoggerToStdoutInit()
 	viper.SetConfigType("yml")
 	viper.SetConfigName("config")
 	viper.AddConfigPath("./")
@@ -89,20 +90,20 @@ func LoadConfig() {
 	viper.AutomaticEnv()
 	err := viper.ReadInConfig()
 	if err != nil {
-		logrus.Fatalln("init config error:", err)
+		utils.Fatalln("init config error:", err)
 	}
-	logrus.Infoln("init config ok")
+	utils.Infoln("init config ok")
 	MConfig = &Config{}
 	err = viper.Unmarshal(&MConfig)
 	if err != nil {
-		logrus.Fatalln("init config unmarshal error:", err)
+		utils.Fatalln("init config unmarshal error:", err)
 	}
-	logrus.Infof("config :%+v", MConfig)
-	level, _ := logrus.ParseLevel(MConfig.LogLevel)
-	logrus.SetLevel(level)
+	utils.Infof("config :%+v", MConfig)
+	// level, _ := utils.ParseLevel(MConfig.LogLevel)
+	utils.SetLogLevel(MConfig.LogLevel)
 	db.DBClient, err = db.Open(MConfig.DB)
 	if err != nil {
-		logrus.Fatalln("init db error:", err)
+		utils.Fatalln("init db error:", err)
 	}
 	db.DBClient.SetNowFuncOverride(func() interface{} {
 		return time.Now().Unix()

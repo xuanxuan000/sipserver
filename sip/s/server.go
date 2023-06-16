@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/utils"
 )
 
@@ -58,16 +57,16 @@ func (s *Server) mustTX(key string) *Transaction {
 func (s *Server) ListenUDPServer(addr string) {
 	udpaddr, err := net.ResolveUDPAddr("udp", addr)
 	if err != nil {
-		logrus.Fatal("net.ResolveUDPAddr err", err, addr)
+		utils.Fatal("net.ResolveUDPAddr err", err, addr)
 	}
 	s.port = NewPort(udpaddr.Port)
 	s.host, err = utils.ResolveSelfIP()
 	if err != nil {
-		logrus.Fatal("net.ListenUDP resolveip err", err, addr)
+		utils.Fatal("net.ListenUDP resolveip err", err, addr)
 	}
 	udp, err := net.ListenUDP("udp", udpaddr)
 	if err != nil {
-		logrus.Fatal("net.ListenUDP err", err, addr)
+		utils.Fatal("net.ListenUDP err", err, addr)
 	}
 	s.conn = newUDPConnection(udp)
 	var (
@@ -81,7 +80,7 @@ func (s *Server) ListenUDPServer(addr string) {
 	for {
 		num, raddr, err = s.conn.ReadFrom(buf)
 		if err != nil {
-			logrus.Errorln("udp.ReadFromUDP err", err)
+			utils.Errorln("udp.ReadFromUDP err", err)
 			continue
 		}
 		parser.in <- newPacket(append([]byte{}, buf[:num]...), raddr)
@@ -108,18 +107,18 @@ func (s *Server) handlerListen(msgs chan Message) {
 			resp.SetDestination(s.udpaddr)
 			s.handlerResponse(resp)
 		default:
-			logrus.Errorln("undefind msg type,", tmsg, msg.String())
+			utils.Errorln("undefind msg type,", tmsg, msg.String())
 		}
 	}
 }
 func (s *Server) handlerRequest(msg *Request) {
 	tx := s.mustTX(getTXKey(msg))
-	logrus.Traceln("receive request from:", msg.Source(), ",method:", msg.Method(), "txKey:", tx.key, "message: \n", msg.String())
+	utils.Traceln("receive request from:", msg.Source(), ",method:", msg.Method(), "txKey:", tx.key, "message: \n", msg.String())
 	s.hmu.RLock()
 	handler, ok := s.requestHandlers[msg.Method()]
 	s.hmu.RUnlock()
 	if !ok {
-		logrus.Errorln("not found handler func,requestMethod:", msg.Method(), msg.String())
+		utils.Errorln("not found handler func,requestMethod:", msg.Method(), msg.String())
 		go handlerMethodNotAllowed(msg, tx)
 		return
 	}
@@ -130,9 +129,9 @@ func (s *Server) handlerRequest(msg *Request) {
 func (s *Server) handlerResponse(msg *Response) {
 	tx := s.getTX(getTXKey(msg))
 	if tx == nil {
-		logrus.Infoln("not found tx. receive response from:", msg.Source(), "message: \n", msg.String())
+		utils.Infoln("not found tx. receive response from:", msg.Source(), "message: \n", msg.String())
 	} else {
-		logrus.Traceln("receive response from:", msg.Source(), "txKey:", tx.key, "message: \n", msg.String())
+		utils.Traceln("receive response from:", msg.Source(), "txKey:", tx.key, "message: \n", msg.String())
 		tx.receiveResponse(msg)
 	}
 }

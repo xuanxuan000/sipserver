@@ -5,7 +5,7 @@ database:
 udp: 0.0.0.0:5060 # sip服务器udp端口
 api: 0.0.0.0:8090 # sip服务 restfulapi 端口
 secret: z9hG4bK1233983766 # restful接口验证key 验证请求使用
-logger: trace
+logger: DEBUG
 media:
   restful: http://localhost:8080 # media 服务器restfulapi地址 
   http: http://localhost:8080  # media 服务器 http请求地址

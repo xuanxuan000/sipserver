@@ -3,7 +3,6 @@ package sipapi
 import (
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/db"
 	"github.com/xuanxuan000/sipserver/utils"
 )
@@ -20,14 +19,14 @@ type MessageNotify struct {
 func sipMessageKeepalive(u Devices, body []byte) error {
 	message := &MessageNotify{}
 	if err := utils.XMLDecode(body, message); err != nil {
-		logrus.Errorln("Message Unmarshal xml err:", err, "body:", string(body))
+		utils.Errorln("Message Unmarshal xml err:", err, "body:", string(body))
 		return err
 	}
 	device, ok := _activeDevices.Get(u.DeviceID)
 	if !ok {
 		device = Devices{DeviceID: u.DeviceID}
 		if err := db.Get(db.DBClient, &device); err != nil {
-			logrus.Warnln("Device Keepalive not found ", u.DeviceID, err)
+			utils.Warningln("Device Keepalive not found ", u.DeviceID, err)
 		}
 	}
 	if message.Status == "OK" {

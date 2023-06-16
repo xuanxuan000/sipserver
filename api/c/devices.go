@@ -265,7 +265,7 @@ func DevicesDelete(c *gin.Context) {
 // 		return
 // 	}
 // 	sipStopPlay(tag)
-// 	logrus.Infoln("closeStream apiStopPlay", tag)
+// 	utils.Infoln("closeStream apiStopPlay", tag)
 // 	_apiResponse(w, statusSucc, "")
 // }
 
@@ -282,7 +282,7 @@ func DevicesDelete(c *gin.Context) {
 // 	w.Header().Add("Content-Type", "application/json")
 // 	_, err := w.Write(utils.JSONEncode(data))
 // 	if err != nil {
-// 		logrus.Errorln("send response api fail.", err)
+// 		utils.Errorln("send response api fail.", err)
 // 	}
 // }
 
@@ -302,5 +302,5 @@ func DevicesDelete(c *gin.Context) {
 // 	router.GET("/addproxy", apiAuthCheck(apiAddProxy, config.Secret))             // 增加拉流代理
 // 	router.GET("/delproxy", apiAuthCheck(apiDelProxy, config.Secret))             // 增加拉流代理
 // 	router.POST("/index/hook/:method", apiWebHooks)
-// 	logrus.Fatal(http.ListenAndServe(config.API, router))
+// 	utils.Fatal(http.ListenAndServe(config.API, router))
 // }

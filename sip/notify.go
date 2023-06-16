@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/utils"
 )
 
@@ -31,15 +30,15 @@ func notify(data *Notify) {
 	if url, ok := config.NotifyMap[data.Method]; ok {
 		res, err := utils.PostJSONRequest(url, data)
 		if err != nil {
-			logrus.Warningln(data.Method, "send notify fail.", err)
+			utils.Warningln(data.Method, "send notify fail.", err)
 		}
 		if strings.ToUpper(string(res)) != "OK" {
-			logrus.Warningln(data.Method, "send notify resp fail.", string(res), "len:", len(res), config.Notify, data)
+			utils.Warningln(data.Method, "send notify resp fail.", string(res), "len:", len(res), config.Notify, data)
 		} else {
-			logrus.Debug("notify send succ:", data.Method, data.Data)
+			utils.Debugln("notify send succ:", data.Method, data.Data)
 		}
 	} else {
-		logrus.Traceln("notify config not found", data.Method)
+		utils.Traceln("notify config not found", data.Method)
 	}
 }
 

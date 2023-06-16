@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/db"
 	"github.com/xuanxuan000/sipserver/m"
 	sipapi "github.com/xuanxuan000/sipserver/sip"
@@ -105,7 +104,7 @@ func zlmStreamChanged(c *gin.Context) {
 			} else {
 				// ssrc不存在，关闭流
 				sipapi.SipStopPlay(ssrc)
-				logrus.Infoln("closeStream on_stream_changed notfound!", req.Stream)
+				utils.Infoln("closeStream on_stream_changed notfound!", req.Stream)
 			}
 		}
 	} else {
@@ -115,7 +114,7 @@ func zlmStreamChanged(c *gin.Context) {
 			if ok {
 				// 流还存在，注销
 				sipapi.SipStopPlay(ssrc)
-				logrus.Infoln("closeStream on_stream_changed cancel!", req.Stream)
+				utils.Infoln("closeStream on_stream_changed cancel!", req.Stream)
 			}
 		}
 	}
@@ -201,17 +200,17 @@ func zlmStreamNotFound(c *gin.Context) {
 			if params.StreamType == m.StreamTypePush {
 				// 存在推流记录关闭当前，重新发起推流
 				sipapi.SipStopPlay(ssrc)
-				logrus.Infoln("closeStream stream pushed!", req.Stream)
+				utils.Infoln("closeStream stream pushed!", req.Stream)
 			} else {
 				// 拉流的，重新拉流
 				sipapi.SipPlay(params)
-				logrus.Infoln("closeStream stream pulled!", req.Stream)
+				utils.Infoln("closeStream stream pulled!", req.Stream)
 			}
 		} else {
 			if time.Now().Unix() > params.Ext {
 				// 发送请求，但超时未接收到推流数据，关闭流
 				sipapi.SipStopPlay(ssrc)
-				logrus.Infoln("closeStream stream wait timeout", req.Stream)
+				utils.Infoln("closeStream stream wait timeout", req.Stream)
 			}
 		}
 	}
@@ -251,5 +250,5 @@ func zlmStreamNoneReader(c *gin.Context) {
 		"code":  0,
 		"close": true,
 	})
-	logrus.Infoln("closeStream on_stream_none_reader", req.Stream)
+	utils.Infoln("closeStream on_stream_none_reader", req.Stream)
 }

@@ -6,7 +6,6 @@ import (
 	"net"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/db"
 	"github.com/xuanxuan000/sipserver/m"
 	sip "github.com/xuanxuan000/sipserver/sip/s"
@@ -112,16 +111,16 @@ type Channels struct {
 func SyncDevicesCodec(ssrc, deviceid string) {
 	resp := zlmGetMediaList(zlmGetMediaListReq{streamID: ssrc})
 	if resp.Code != 0 {
-		logrus.Errorln("syncDevicesCodec fail", ssrc, resp)
+		utils.Errorln("syncDevicesCodec fail", ssrc, resp)
 		return
 	}
 	if len(resp.Data) == 0 {
-		logrus.Errorln("syncDevicesCodec fail", ssrc, "not found data", resp)
+		utils.Errorln("syncDevicesCodec fail", ssrc, "not found data", resp)
 		return
 	}
 	for _, data := range resp.Data {
 		if len(data.Tracks) == 0 {
-			logrus.Errorln("syncDevicesCodec fail", ssrc, "not found tracks", resp)
+			utils.Errorln("syncDevicesCodec fail", ssrc, "not found tracks", resp)
 		}
 
 		for _, track := range data.Tracks {
@@ -135,7 +134,7 @@ func SyncDevicesCodec(ssrc, deviceid string) {
 					device.FPS = track.FPS
 					db.Save(db.DBClient, &device)
 				} else {
-					logrus.Errorln("syncDevicesCodec deviceid not found,deviceid:", deviceid)
+					utils.Errorln("syncDevicesCodec deviceid not found,deviceid:", deviceid)
 				}
 			}
 		}
@@ -147,22 +146,22 @@ func parserDevicesFromReqeust(req *sip.Request) (Devices, bool) {
 	u := Devices{}
 	header, ok := req.From()
 	if !ok {
-		logrus.Warningln("not found from header from request", req.String())
+		utils.Warningln("not found from header from request", req.String())
 		return u, false
 	}
 	if header.Address == nil {
-		logrus.Warningln("not found from user from request", req.String())
+		utils.Warningln("not found from user from request", req.String())
 		return u, false
 	}
 	if header.Address.User() == nil {
-		logrus.Warningln("not found from user from request", req.String())
+		utils.Warningln("not found from user from request", req.String())
 		return u, false
 	}
 	u.DeviceID = header.Address.User().String()
 	u.Region = header.Address.Host()
 	via, ok := req.ViaHop()
 	if !ok {
-		logrus.Info("not found ViaHop from request", req.String())
+		utils.Infoln("not found ViaHop from request", req.String())
 		return u, false
 	}
 	u.Host = via.Host
@@ -193,12 +192,12 @@ func sipDeviceInfo(to Devices) {
 	req.SetDestination(to.source)
 	tx, err := srv.Request(req)
 	if err != nil {
-		logrus.Warnln("sipDeviceInfo  error,", err)
+		utils.Warningln("sipDeviceInfo  error,", err)
 		return
 	}
 	_, err = sipResponse(tx)
 	if err != nil {
-		logrus.Warnln("sipDeviceInfo  response error,", err)
+		utils.Warningln("sipDeviceInfo  response error,", err)
 		return
 	}
 }
@@ -212,12 +211,12 @@ func sipCatalog(to Devices) {
 	req.SetDestination(to.source)
 	tx, err := srv.Request(req)
 	if err != nil {
-		logrus.Warnln("sipCatalog  error,", err)
+		utils.Warningln("sipCatalog  error,", err)
 		return
 	}
 	_, err = sipResponse(tx)
 	if err != nil {
-		logrus.Warnln("sipCatalog  response error,", err)
+		utils.Warningln("sipCatalog  response error,", err)
 		return
 	}
 }
@@ -236,7 +235,7 @@ type MessageDeviceInfoResponse struct {
 func sipMessageDeviceInfo(u Devices, body []byte) error {
 	message := &MessageDeviceInfoResponse{}
 	if err := utils.XMLDecode([]byte(body), message); err != nil {
-		logrus.Errorln("sipMessageDeviceInfo Unmarshal xml err:", err, "body:", body)
+		utils.Errorln("sipMessageDeviceInfo Unmarshal xml err:", err, "body:", body)
 		return err
 	}
 	db.UpdateAll(db.DBClient, new(Devices), db.M{"deviceid=?": u.DeviceID}, Devices{
@@ -261,7 +260,7 @@ type MessageDeviceListResponse struct {
 func sipMessageCatalog(u Devices, body []byte) error {
 	message := &MessageDeviceListResponse{}
 	if err := utils.XMLDecode(body, message); err != nil {
-		logrus.Errorln("Message Unmarshal xml err:", err, "body:", string(body))
+		utils.Errorln("Message Unmarshal xml err:", err, "body:", string(body))
 		return err
 	}
 	if message.SumNum > 0 {
@@ -285,7 +284,7 @@ func sipMessageCatalog(u Devices, body []byte) error {
 				db.Save(db.DBClient, &channel)
 				go notify(notifyChannelsActive(channel))
 			} else {
-				logrus.Infoln("deviceid not found,deviceid:", d.DeviceID, "pdid:", message.DeviceID, "err", err)
+				utils.Infoln("deviceid not found,deviceid:", d.DeviceID, "pdid:", message.DeviceID, "err", err)
 			}
 		}
 	}

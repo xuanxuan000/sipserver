@@ -116,9 +116,15 @@ func SetLogLevel(logLevel string) {
 	}
 }
 
+func Traceln(v ...interface{}) {
+	aclog.Named(fileInfo()).Debug(v...)
+}
+func Tracef(format string, v ...interface{}) {
+	aclog.Named(fileInfo()).Debugf(format, v...)
+}
+
 func Debugln(v ...interface{}) {
 	aclog.Named(fileInfo()).Debug(v...)
-
 }
 func Debugf(format string, v ...interface{}) {
 	aclog.Named(fileInfo()).Debugf(format, v...)
@@ -141,8 +147,21 @@ func Warningf(format string, v ...interface{}) {
 func Infoln(v ...interface{}) {
 	aclog.Named(fileInfo()).Info(v...)
 }
+
 func Infof(format string, v ...interface{}) {
 	aclog.Named(fileInfo()).Infof(format, v...)
+}
+
+func Fatal(v ...interface{}) {
+	aclog.Named(fileInfo()).Fatal(v...)
+}
+
+func Fatalln(v ...interface{}) {
+	aclog.Named(fileInfo()).Fatal(v...)
+}
+
+func Fatalf(format string, v ...interface{}) {
+	aclog.Named(fileInfo()).Fatalf(format, v...)
 }
 
 func SignalHandle() {

@@ -8,7 +8,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	sip "github.com/xuanxuan000/sipserver/sip/s"
 	"github.com/xuanxuan000/sipserver/utils"
 )
@@ -93,7 +92,7 @@ var _recordList *sync.Map
 func sipMessageRecordInfo(u Devices, body []byte) error {
 	message := &MessageRecordInfoResponse{}
 	if err := utils.XMLDecode(body, message); err != nil {
-		logrus.Errorln("Message Unmarshal xml err:", err, "body:", string(body))
+		utils.Errorln("Message Unmarshal xml err:", err, "body:", string(body))
 		return err
 	}
 	recordKey := fmt.Sprintf("%s%d", message.DeviceID, message.SN)

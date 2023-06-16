@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/db"
 	sip "github.com/xuanxuan000/sipserver/sip/s"
 	"github.com/xuanxuan000/sipserver/utils"
@@ -33,14 +32,14 @@ func handlerMessage(req *sip.Request, tx *sip.Transaction) {
 	message := &MessageReceive{}
 
 	if err := utils.XMLDecode(body, message); err != nil {
-		logrus.Warnln("Message Unmarshal xml err:", err, "body:", string(body))
+		utils.Warningln("Message Unmarshal xml err:", err, "body:", string(body))
 		// 有些body xml发送过来的不带encoding ，而且格式不是utf8的，导致xml解析失败，此处使用gbk转utf8后再次尝试xml解析
 		body, err = utils.GbkToUtf8(body)
 		if err != nil {
-			logrus.Errorln("message gbk to utf8 err", err)
+			utils.Errorln("message gbk to utf8 err", err)
 		}
 		if err := utils.XMLDecode(body, message); err != nil {
-			logrus.Errorln("Message Unmarshal xml after gbktoutf8 err:", err, "body:", string(body))
+			utils.Errorln("Message Unmarshal xml after gbktoutf8 err:", err, "body:", string(body))
 			tx.Respond(sip.NewResponseFromRequest("", req, http.StatusBadRequest, http.StatusText(http.StatusBadRequest), nil))
 			return
 		}
@@ -73,8 +72,7 @@ func handlerMessage(req *sip.Request, tx *sip.Transaction) {
 }
 
 func handlerRegister(req *sip.Request, tx *sip.Transaction) {
-	logrus.Debug("huahuahuahuahauhauh^^^^^^^^^^^^")
-	logrus.Debugf("%+v", req)
+	utils.Debugf("receive Register req: %+v", req)
 	// 判断是否存在授权字段
 	if hdrs := req.GetHeaders("Authorization"); len(hdrs) > 0 {
 		fromUser, ok := parserDevicesFromReqeust(req)
@@ -107,7 +105,7 @@ func handlerRegister(req *sip.Request, tx *sip.Transaction) {
 					// 第一次激活，保存数据库
 					user.Regist = true
 					db.DBClient.Save(&user)
-					logrus.Infoln("new user regist,id:", user.DeviceID)
+					utils.Infoln("new user regist,id:", user.DeviceID)
 				}
 				tx.Respond(sip.NewResponseFromRequest("", req, http.StatusOK, "OK", nil))
 				// 注册成功后查询设备信息，获取制作厂商等信息

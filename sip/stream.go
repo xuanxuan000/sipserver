@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/db"
 	sip "github.com/xuanxuan000/sipserver/sip/s"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // Streams Streams
@@ -87,13 +87,13 @@ func getSSRC(t int) string {
 // 1. 数据库查询当前status=0在推流状态的所有流信息
 // 2. 比对当前streamlist中存在的流，如果不在streamlist或者ssrc与channelid不匹配则关闭
 func CheckStreams() {
-	logrus.Debugln("checkStreamWithCron")
+	utils.Debugln("checkStreamWithCron")
 	var skip int
 	for {
 		streams := []Streams{}
 		db.FindT(db.DBClient, new(Streams), &streams, db.M{"status=?": 0, "streamtype=?": "push"}, "", skip, 100, false)
 		for _, stream := range streams {
-			logrus.Debugln("checkStreamStreamID", stream.StreamID, stream.DeviceID)
+			utils.Debugln("checkStreamStreamID", stream.StreamID, stream.DeviceID)
 			if p, ok := StreamList.Response.Load(stream.StreamID); ok {
 				streamActive := p.(*Streams)
 				if streamActive.ChannelID == stream.ChannelID {
@@ -110,20 +110,20 @@ func CheckStreams() {
 					}
 				}
 			}
-			logrus.Debugln("checkStreamActiveDevice", stream.StreamID, stream.DeviceID)
+			utils.Debugln("checkStreamActiveDevice", stream.StreamID, stream.DeviceID)
 			device, ok := _activeDevices.Get(stream.DeviceID)
 			if !ok {
 				continue
 			}
 			if device.source == nil {
-				logrus.Warningln("checkStreamDeviceSource is nil", stream.StreamID, stream.DeviceID)
+				utils.Warningln("checkStreamDeviceSource is nil", stream.StreamID, stream.DeviceID)
 				continue
 			}
-			logrus.Debugln("checkStreamClosed", stream.StreamID, stream.DeviceID)
+			utils.Debugln("checkStreamClosed", stream.StreamID, stream.DeviceID)
 			// 关闭此流
 			channel := Channels{ChannelID: stream.ChannelID}
 			if err := db.Get(db.DBClient, &channel); err != nil {
-				logrus.Errorln("checkStreamGetchannelError", stream.StreamID, stream.ChannelID, err)
+				utils.Errorln("checkStreamGetchannelError", stream.StreamID, stream.ChannelID, err)
 				stream.Msg = err.Error()
 				db.Save(db.DBClient, stream)
 				channel = Channels{
@@ -156,24 +156,24 @@ func CheckStreams() {
 
 			tx, err := srv.Request(req)
 			if err != nil {
-				logrus.Warningln("checkStreamClosedFail", stream.StreamID, err)
+				utils.Warningln("checkStreamClosedFail", stream.StreamID, err)
 				stream.Msg = err.Error()
 				db.Save(db.DBClient, stream)
 				continue
 			}
 			response := tx.GetResponse()
 			if response == nil {
-				logrus.Warningln("checkStreamClosedFail response is nil", channel.ChannelID, channel.DeviceID, stream.StreamID)
+				utils.Warningln("checkStreamClosedFail response is nil", channel.ChannelID, channel.DeviceID, stream.StreamID)
 				continue
 			}
 			if response.StatusCode() != http.StatusOK {
 				if response.StatusCode() == 481 {
-					logrus.Infoln("checkStreamClosedFail1", stream.StreamID, response.StatusCode())
+					utils.Infoln("checkStreamClosedFail1", stream.StreamID, response.StatusCode())
 					stream.Msg = response.Reason()
 					stream.Status = 1
 					stream.Stop = true
 				} else {
-					logrus.Warningln("checkStreamClosedFail1", stream.StreamID, response.StatusCode())
+					utils.Warningln("checkStreamClosedFail1", stream.StreamID, response.StatusCode())
 					stream.Msg = response.Reason()
 				}
 			} else {

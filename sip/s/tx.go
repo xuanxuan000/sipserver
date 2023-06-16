@@ -5,7 +5,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/xuanxuan000/sipserver/utils"
 )
 
@@ -50,7 +49,7 @@ type Transaction struct {
 
 // NewTransaction NewTransaction
 func NewTransaction(key string, conn Connection) *Transaction {
-	logrus.Traceln("new tx", key, time.Now().Format("2006-01-02 15:04:05"))
+	utils.Traceln("new tx", key, time.Now().Format("2006-01-02 15:04:05"))
 	tx := &Transaction{conn: conn, key: key, resp: make(chan *Response, 10), active: make(chan int, 1)}
 	go tx.watch()
 	return tx
@@ -65,10 +64,10 @@ func (tx *Transaction) watch() {
 	for {
 		select {
 		case <-tx.active:
-			logrus.Traceln("active tx", tx.Key(), time.Now().Format("2006-01-02 15:04:05"))
+			utils.Traceln("active tx", tx.Key(), time.Now().Format("2006-01-02 15:04:05"))
 		case <-time.After(20 * time.Second):
 			tx.Close()
-			logrus.Traceln("watch closed tx", tx.key, time.Now().Format("2006-01-02 15:04:05"))
+			utils.Traceln("watch closed tx", tx.key, time.Now().Format("2006-01-02 15:04:05"))
 			return
 		}
 	}
@@ -82,7 +81,7 @@ func (tx *Transaction) GetResponse() *Response {
 			return res
 		}
 		tx.active <- 2
-		logrus.Traceln("response tx", tx.key, time.Now().Format("2006-01-02 15:04:05"))
+		utils.Traceln("response tx", tx.key, time.Now().Format("2006-01-02 15:04:05"))
 		if res.StatusCode() == http.StatusContinue || res.statusCode == http.StatusSwitchingProtocols {
 			// Trying and Dialog Establishement 等待下一个返回
 			continue
@@ -93,7 +92,7 @@ func (tx *Transaction) GetResponse() *Response {
 
 // Close Close
 func (tx *Transaction) Close() {
-	logrus.Traceln("closed tx", tx.key, time.Now().Format("2006-01-02 15:04:05"))
+	utils.Traceln("closed tx", tx.key, time.Now().Format("2006-01-02 15:04:05"))
 	activeTX.rmTX(tx)
 	close(tx.resp)
 	close(tx.active)
@@ -103,24 +102,24 @@ func (tx *Transaction) Close() {
 func (tx *Transaction) receiveResponse(msg *Response) {
 	defer func() {
 		if r := recover(); r != nil {
-			logrus.Errorln("send to closed channel, txkey:", tx.key, "message: \n", msg.String())
+			utils.Errorln("send to closed channel, txkey:", tx.key, "message: \n", msg.String())
 		}
 	}()
-	logrus.Traceln("receiveResponse tx", tx.Key(), time.Now().Format("2006-01-02 15:04:05"))
+	utils.Traceln("receiveResponse tx", tx.Key(), time.Now().Format("2006-01-02 15:04:05"))
 	tx.resp <- msg
 	tx.active <- 1
 }
 
 // Respond Respond
 func (tx *Transaction) Respond(res *Response) error {
-	logrus.Traceln("send response,to:", res.dest.String(), "txkey:", tx.key, "message: \n", res.String())
+	utils.Traceln("send response,to:", res.dest.String(), "txkey:", tx.key, "message: \n", res.String())
 	_, err := tx.conn.WriteTo([]byte(res.String()), res.dest)
 	return err
 }
 
 // Request Request
 func (tx *Transaction) Request(req *Request) error {
-	logrus.Traceln("send request,to:", req.dest.String(), "txkey:", tx.key, "message: \n", req.String())
+	utils.Traceln("send request,to:", req.dest.String(), "txkey:", tx.key, "message: \n", req.String())
 	_, err := tx.conn.WriteTo([]byte(req.String()), req.dest)
 	return err
 }
