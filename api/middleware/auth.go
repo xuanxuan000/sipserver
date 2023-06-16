@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/panjjo/gosip/utils"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // Restful API sign 鉴权

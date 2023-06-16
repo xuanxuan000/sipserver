@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/panjjo/gorm"
-	"github.com/panjjo/gosip/utils"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 type DBModel struct {

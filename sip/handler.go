@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/panjjo/gosip/db"
-	sip "github.com/panjjo/gosip/sip/s"
-	"github.com/panjjo/gosip/utils"
 	"github.com/sirupsen/logrus"
+	"github.com/xuanxuan000/sipserver/db"
+	sip "github.com/xuanxuan000/sipserver/sip/s"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // MessageReceive 接收到的请求数据最外层，主要用来判断数据类型

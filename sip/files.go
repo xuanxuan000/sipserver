@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/panjjo/gosip/db"
-	"github.com/panjjo/gosip/m"
-	"github.com/panjjo/gosip/utils"
+	"github.com/xuanxuan000/sipserver/db"
+	"github.com/xuanxuan000/sipserver/m"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 type apiRecordList struct {

@@ -2,8 +2,8 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	api "github.com/panjjo/gosip/api/c"
-	"github.com/panjjo/gosip/api/middleware"
+	api "github.com/xuanxuan000/sipserver/api/c"
+	"github.com/xuanxuan000/sipserver/api/middleware"
 )
 
 func Init(r *gin.Engine) {

@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/panjjo/gosip/db"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"github.com/xuanxuan000/sipserver/db"
 )
 
 // Config Config

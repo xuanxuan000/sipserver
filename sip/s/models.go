@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/panjjo/gosip/utils"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // DefaultProtocol DefaultProtocol

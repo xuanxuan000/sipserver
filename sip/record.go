@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	sip "github.com/panjjo/gosip/sip/s"
-	"github.com/panjjo/gosip/utils"
 	"github.com/sirupsen/logrus"
+	sip "github.com/xuanxuan000/sipserver/sip/s"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // 获取录像文件列表

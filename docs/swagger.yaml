@@ -273,12 +273,12 @@ info:
   contact:
     email: panjjo@vip.qq.com
     name: GoSIP
-    url: https://github.com/panjjo/gosip
+    url: https://github.com/xuanxuan000/sipserver
   description: GB28181 SIP服务端.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: https://github.com/panjjo/gosip
+  termsOfService: https://github.com/xuanxuan000/sipserver
   title: GoSIP
   version: "2.0"
 paths:

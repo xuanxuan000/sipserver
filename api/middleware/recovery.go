@@ -4,8 +4,8 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
-	"github.com/panjjo/gosip/m"
 	"github.com/sirupsen/logrus"
+	"github.com/xuanxuan000/sipserver/m"
 )
 
 func Recovery(c *gin.Context) {

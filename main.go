@@ -5,13 +5,13 @@ import (
 	_ "net/http/pprof"
 
 	"github.com/gin-gonic/gin"
-	"github.com/huahua000/sipserver/api"
-	"github.com/huahua000/sipserver/api/middleware"
-	"github.com/huahua000/sipserver/m"
-	sipapi "github.com/huahua000/sipserver/sip"
+	"github.com/xuanxuan000/sipserver/api"
+	"github.com/xuanxuan000/sipserver/api/middleware"
+	"github.com/xuanxuan000/sipserver/m"
+	sipapi "github.com/xuanxuan000/sipserver/sip"
 
-	_ "github.com/huahua000/sipserver/docs"
-	"github.com/huahua000/sipserver/utils"
+	_ "github.com/xuanxuan000/sipserver/docs"
+	"github.com/xuanxuan000/sipserver/utils"
 
 	"github.com/robfig/cron"
 	swaggerfiles "github.com/swaggo/files"
@@ -21,10 +21,10 @@ import (
 // @title          GoSIP
 // @version        2.0
 // @description    GB28181 SIP服务端.
-// @termsOfService https://github.com/panjjo/gosip
+// @termsOfService https://github.com/xuanxuan000/sipserver
 
 // @contact.name  GoSIP
-// @contact.url   https://github.com/panjjo/gosip
+// @contact.url   https://github.com/xuanxuan000/sipserver
 // @contact.email panjjo@vip.qq.com
 
 // @license.name Apache 2.0

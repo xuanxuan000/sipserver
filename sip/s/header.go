@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/panjjo/gosip/utils"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // HeadersBuilder HeadersBuilder
@@ -648,7 +648,7 @@ func (params *headerParams) Equals(other interface{}) bool {
 
 // ==================   ContentLengthHeader   ================
 
-//ContentLength ContentLength header
+// ContentLength ContentLength header
 type ContentLength uint32
 
 func (contentLength ContentLength) String() string {

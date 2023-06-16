@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/panjjo/gosip/db"
-	sip "github.com/panjjo/gosip/sip/s"
 	"github.com/sirupsen/logrus"
+	"github.com/xuanxuan000/sipserver/db"
+	sip "github.com/xuanxuan000/sipserver/sip/s"
 )
 
 // Streams Streams

@@ -7,11 +7,11 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/panjjo/gosip/db"
-	"github.com/panjjo/gosip/m"
-	sipapi "github.com/panjjo/gosip/sip"
-	"github.com/panjjo/gosip/utils"
 	"github.com/sirupsen/logrus"
+	"github.com/xuanxuan000/sipserver/db"
+	"github.com/xuanxuan000/sipserver/m"
+	sipapi "github.com/xuanxuan000/sipserver/sip"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 func ZLMWebHook(c *gin.Context) {

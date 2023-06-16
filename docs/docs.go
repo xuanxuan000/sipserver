@@ -10,10 +10,10 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "https://github.com/panjjo/gosip",
+        "termsOfService": "https://github.com/xuanxuan000/sipserver",
         "contact": {
             "name": "GoSIP",
-            "url": "https://github.com/panjjo/gosip",
+            "url": "https://github.com/xuanxuan000/sipserver",
             "email": "panjjo@vip.qq.com"
         },
         "license": {

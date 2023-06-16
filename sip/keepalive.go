@@ -3,9 +3,9 @@ package sipapi
 import (
 	"time"
 
-	"github.com/panjjo/gosip/db"
-	"github.com/panjjo/gosip/utils"
 	"github.com/sirupsen/logrus"
+	"github.com/xuanxuan000/sipserver/db"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // MessageNotify 心跳包xml结构

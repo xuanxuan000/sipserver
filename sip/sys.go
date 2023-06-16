@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/panjjo/gosip/db"
-	"github.com/panjjo/gosip/m"
-	sip "github.com/panjjo/gosip/sip/s"
-	"github.com/panjjo/gosip/utils"
 	"github.com/sirupsen/logrus"
+	"github.com/xuanxuan000/sipserver/db"
+	"github.com/xuanxuan000/sipserver/m"
+	sip "github.com/xuanxuan000/sipserver/sip/s"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 func Start() {

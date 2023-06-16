@@ -5,9 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/panjjo/gorm"
-	"github.com/panjjo/gosip/db"
-	"github.com/panjjo/gosip/m"
-	sipapi "github.com/panjjo/gosip/sip"
+	"github.com/xuanxuan000/sipserver/db"
+	"github.com/xuanxuan000/sipserver/m"
+	sipapi "github.com/xuanxuan000/sipserver/sip"
 )
 
 // @Summary     设备新增接口

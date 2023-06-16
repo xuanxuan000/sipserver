@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/panjjo/gosip/utils"
 	"github.com/sirupsen/logrus"
+	"github.com/xuanxuan000/sipserver/utils"
 )
 
 // The whitespace characters recognised by the Augmented Backus-Naur Form syntax
@@ -427,6 +427,7 @@ func ParseAddressValues(addresses string) (
 //   - a parsed SipUri object
 //   - a map containing any header parameters present
 //   - the error object
+//
 // See RFC 3261 section 20.10 for details on parsing an address.
 // Note that this method will not accept a comma-separated list of addresses;
 // addresses in that form should be handled by ParseAddressValues.
@@ -704,8 +705,9 @@ func isRequest(startLine string) bool {
 }
 
 // ParseRequestLine the first line of a SIP request, e.g:
-//   INVITE bob@example.com SIP/2.0
-//   REGISTER jane@telco.com SIP/1.0
+//
+//	INVITE bob@example.com SIP/2.0
+//	REGISTER jane@telco.com SIP/1.0
 func ParseRequestLine(requestLine string) (
 	method RequestMethod, recipient *URI, sipVersion string, err error) {
 	parts := strings.Split(requestLine, " ")
@@ -721,8 +723,9 @@ func ParseRequestLine(requestLine string) (
 }
 
 // ParseStatusLine the first line of a SIP response, e.g:
-//   SIP/2.0 200 OK
-//   SIP/1.0 403 Forbidden
+//
+//	SIP/2.0 200 OK
+//	SIP/1.0 403 Forbidden
 func ParseStatusLine(statusLine string) (
 	sipVersion string, statusCode int, reasonPhrase string, err error) {
 	parts := strings.Split(statusLine, " ")
