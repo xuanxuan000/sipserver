@@ -259,8 +259,6 @@ github.com/otiai10/curr v0.0.0-20150429015615-9b4961190c95/go.mod h1:9qAhocn7zKJ
 github.com/otiai10/curr v1.0.0/go.mod h1:LskTG5wDwr8Rs+nNQ+1LlxRjAtTZZjtJW4rMXl6j4vs=
 github.com/otiai10/mint v1.3.0/go.mod h1:F5AjcsTsWUqX+Na9fpHb52P8pcRX2CI6A3ctIT91xUo=
 github.com/otiai10/mint v1.3.3/go.mod h1:/yxELlJQ0ufhjUwhshSj+wFjZ78CnZ48/1wtmBH1OTc=
-github.com/panjjo/gorm v1.0.1 h1:k1H8UY8vfNnJ+iyJJqsdOfNr1lkWTfacSb3ZtSWkEZw=
-github.com/panjjo/gorm v1.0.1/go.mod h1:hMVxD80xXb2+QOo2szwrIdM/+zTi85d9ymKMVdIQ7Do=
 github.com/panjjo/gosdp v0.0.0-20201029020038-56e3a0ec56ef h1:RmpKwi6Ju0aSGZe9zdhX3dT0DoGZMTrRScUap6WVFSg=
 github.com/panjjo/gosdp v0.0.0-20201029020038-56e3a0ec56ef/go.mod h1:VyTSJoai1m6iMalmg8kEMuaKk2amkc6JS0K7H0xfcmQ=
 github.com/pelletier/go-toml v1.9.5 h1:4yBQzkHv+7BHq2PQUZF3Mx0IYxG7LsP222s7Agd3ve8=

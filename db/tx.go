@@ -3,7 +3,7 @@ package db
 import (
 	"errors"
 
-	"github.com/panjjo/gorm"
+	"github.com/xuanxuan000/gorm"
 )
 
 type Tx struct {

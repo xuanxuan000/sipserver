@@ -1,4 +1,4 @@
-module github.com/panjjo/gosip
+module github.com/xuanxuan000/gosip
 
 go 1.19
 
@@ -7,13 +7,13 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/gofrs/uuid v4.3.0+incompatible
 	github.com/jinzhu/gorm v1.9.16
-	github.com/panjjo/gorm v1.0.1
 	github.com/panjjo/gosdp v0.0.0-20201029020038-56e3a0ec56ef
 	github.com/robfig/cron v1.2.0
 	github.com/spf13/viper v1.13.0
 	github.com/swaggo/files v0.0.0-20220728132757-551d4a08d97a
 	github.com/swaggo/gin-swagger v1.5.3
 	github.com/swaggo/swag v1.8.6
+	github.com/xuanxuan000/gorm v1.0.1
 	github.com/xuanxuan000/sipserver v1.0.0
 	go.uber.org/zap v1.17.0
 	golang.org/x/net v0.0.0-20220909164309-bea034e7d591
@@ -67,4 +67,8 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/xuanxuan000/sipserver v1.0.0 => ./
+replace (
+	github.com/panjjo/gosip v1.0.1 => ./gosip
+	github.com/xuanxuan000/gorm v1.0.1 => ./gorm
+	github.com/xuanxuan000/sipserver v1.0.0 => ./
+)

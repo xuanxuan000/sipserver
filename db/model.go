@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/panjjo/gorm"
+	"github.com/xuanxuan000/gorm"
 	"github.com/xuanxuan000/sipserver/utils"
 )
 

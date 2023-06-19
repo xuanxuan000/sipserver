@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/panjjo/gorm"
+	"github.com/xuanxuan000/gorm"
 	"github.com/xuanxuan000/sipserver/db"
 	"github.com/xuanxuan000/sipserver/m"
 	sipapi "github.com/xuanxuan000/sipserver/sip"

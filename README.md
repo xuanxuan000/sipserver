@@ -14,8 +14,8 @@ zlm免编译docker镜像 [zlm docker image](https://hub.docker.com/repository/do
 2. 启动mysql 并创建DB
 3. 修改demo下的配置文件（数据库地址和zlm地址,本地端口等）
 4. 启动gosip ，启动后gosip会自动创建数据库表。浏览器访问http://localhost:8090/swagger/index.html 可查看在线API文档
-<!-- 5. 通过设备注册接口（POST /devices) 新注册一个设备，获取到设备sipid和服务器sipid，服务器域等信息， -->
-<!-- 6. 通过通道注册接口（POST /devices/:id/channels)新增通道设备 -->
+5. 通过设备注册接口（POST /devices) 新注册一个设备，获取到设备sipid和服务器sipid，服务器域等信息，
+6. 通过通道注册接口（POST /devices/:id/channels)新增通道设备
 7. 将config.yaml的相关数据填充到录像机GB28181配置页面，并保存
 8. 查看设备和通道是否活跃并在线
 9. 通道在线后访问播放接口（POST /channels/:id/streams）获取直播流

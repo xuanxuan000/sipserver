@@ -6,7 +6,7 @@ import (
 	"time"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/panjjo/gorm"
+	"github.com/xuanxuan000/gorm"
 	//  _ "github.com/jinzhu/gorm/dialects/postgres"
 	//  _ "github.com/jinzhu/gorm/dialects/sqlite"
 	//  _ "github.com/jinzhu/gorm/dialects/mssql"
