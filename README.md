@@ -6,14 +6,18 @@ sipserver,GB28181,ZLMediaKit
 ---
 # gosip
 和 [ZLMediaKit](https://github.com/xia-chu/ZLMediaKit) 一起使用，zlm配置文件中的webhook请配置为此项目的restfulapi地址，否则部分功能无法使用。
-zlm免编译docker镜像 [zlm docker image](https://hub.docker.com/repository/docker/panjjo/zlmediakit)
+zlm官方免编译docker镜像 [zlm docker image](https://hub.docker.com/r/zlmediakit/zlmediakit)
 
 ---
 ## 快速开始
-1. 运行zlmedia 具体运行方式请参考[ZLMediaKit](https://github.com/xia-chu/ZLMediaKit)
+1. 运行 zlmedia 使用 docker, 其他运行方式请参考[ZLMediaKit主页](https://github.com/xia-chu/ZLMediaKit)
+  ```bash
+  #此镜像为github持续集成自动编译推送，跟代码(master分支)保持最新状态
+  docker run -id -p 1935:1935 -p 8080:80 -p 8443:443 -p 8554:554 -p 10000:10000 -p 10000:10000/udp -p 8000:8000/udp -p 9000:9000/udp zlmediakit/zlmediakit:master
+  ```
 2. 启动mysql 并创建DB
 3. 修改demo下的配置文件（数据库地址和zlm地址,本地端口等）
-4. 启动gosip ，启动后gosip会自动创建数据库表。浏览器访问http://localhost:8090/swagger/index.html 可查看在线API文档
+4. 启动gosip ，启动后gosip会自动创建数据库表。浏览器访问 [主页](http://localhost:8090/swagger/index.html) 可查看在线API文档
 5. 通过设备注册接口（POST /devices) 新注册一个设备，获取到设备sipid和服务器sipid，服务器域等信息，
 6. 通过通道注册接口（POST /devices/:id/channels)新增通道设备
 7. 将config.yaml的相关数据填充到录像机GB28181配置页面，并保存
@@ -74,7 +78,7 @@ zlm免编译docker镜像 [zlm docker image](https://hub.docker.com/repository/do
     - 通道为连接到NVR/DVR上的摄像头 或者 支持28181协议的摄像头
     - 通道采用注册制，通过API接口生成通道参数
 
-### 直播/回播
+### 直播/回放
 + 直播(/streams)
   - 接口返回的streamid 为国标协议中的SSRC（16进制）
   - 一个通道最多在一个直播申请，重复请求会返回同一个播放地址。
@@ -82,7 +86,7 @@ zlm免编译docker镜像 [zlm docker image](https://hub.docker.com/repository/do
   - 播放过程不能前进后退，不能暂停
   - 直播可以调用接口关闭，调用API后所有观看此通道的直播全部关闭。一般来说直播不需要手动关闭，等待无人观看5分钟后会自动关闭。（时间长度在zlm配置文件中调整）
 
-- 回播(/streams)
+- 回放(/streams)
   - 回放请求播放API之前，请先调用录像历史文件列表接口（/records），获取到通道可回放的时间段
   - 回放传入的时间必须在回放文件时间列表内
   - 播放过程不能前进后退，不能暂停
